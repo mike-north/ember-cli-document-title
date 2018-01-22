@@ -1,4 +1,10 @@
-declare module 'ember' {
+type RouteTitleToken =
+  | string
+  | (() => string)
+  | (() => string[])
+  | (() => Promise<string>)
+  | (() => Promise<string[]>);
+declare module "ember" {
   /**
    * NOTE: because of the way @types/ember works,
    * merging a few properties into the Ember.Route interface
@@ -8,8 +14,8 @@ declare module 'ember' {
    */
   namespace Ember {
     interface Route {
-      titleToken: string;
-      title: string;
+      titleToken: RouteTitleToken;
+      title: string | ((tokens: string[]) => string);
       setTitle: (title: string) => void;
     }
   }
